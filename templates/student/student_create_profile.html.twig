@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+      <form action="" method="post">
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-2 col-form-label">First Name:</label>
+    <div class="col-sm-10">
+      <input type="text" class="form-control" name="fname" id="inputEmail3" placeholder="Enter the title of your exam" required>
+    </div>
+
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Last Name:</label>
+    <div class="col-sm-10">
+      <input type="text" name="lname" class="form-control" id="inputEmail3" required>
+    </div>
+  <div class="form-group row">
+    <label for="inputEmail3" class="col-sm-2 col-form-label">Marks</label>
+    <div class="col-sm-10">
+      <input type="text" name="marks" class="form-control" id="inputEmail3" required>
+    </div>
+    <div class="col-sm-10">
+      <input type="text" name="userUniqueId" class="form-control" id="inputEmail3" value="{{userId}}" hidden>
+    </div>
+
+  <div>
+    <input type="submit" value="Save and Continue" class="btn btn-primary W-25" id="add_btn">
+  </div>
+</form>
+</body>
+</html>
