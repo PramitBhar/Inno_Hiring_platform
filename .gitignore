@@ -9,6 +9,9 @@
 /vendor/
 /.env
 /.env.test
+/src/Service/Compiler.php
+/src/Controller/CodeEditorController.php
+/templates/codeEditor
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###

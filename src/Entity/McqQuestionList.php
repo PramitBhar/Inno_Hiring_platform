@@ -129,8 +129,7 @@ class McqQuestionList
         return $this;
     }
 
-    public function getExamUniqueId(): ?string
-    {
+    public function getExamUniqueId(): ?string {
         return $this->exam_unique_id;
     }
 

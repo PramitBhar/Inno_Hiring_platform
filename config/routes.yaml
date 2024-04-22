@@ -19,30 +19,36 @@ student:
   path: /student/{userId<[a-zA-Z0-9]+>}
   controller: App\Controller\StudentController::student
 recruit:
-  path: /recruit
+  path: /recruit/{userId<[a-zA-Z0-9]+>}
   controller: App\Controller\RecruitController::recruit
 new-test:
   path: /recruit/new-test
   controller: App\Controller\ExamCreationController::createExam
 edit_exam:
-  path: /recruit/edit_exam
+  path: /recruit/edit_exam/{userId<[a-zA-Z0-9]+>}/{getExamId<[a-zA-Z0-9]+>}
   controller: App\Controller\ExamCreationController::editExam
 add_question:
   path: /recruit/add_question/{getExamId<[a-zA-Z0-9]+>}
   controller: App\Controller\ExamCreationController::addQuestion
   methods: [GET,POST];
 exam_contest:
-  path: /contest/{getExamId<[a-zA-Z0-9]+>}
+  path: /contest/{userId<[a-zA-Z0-9]+>}/{getExamId<[a-zA-Z0-9]+>}
   controller: App\Controller\ExamCreationController::submitExam
 result:
   path: /contest/{getExamId<[a-zA-Z0-9]+>}/result
   controller: App\Controller\ExamCreationController::examResult
 student_profile:
-  path: /student/create_profile/{userId<[a-zA-Z0-9]+>}
+  path: /student/{userId<[a-zA-Z0-9]+>}/create_profile
   controller: App\Controller\StudentController::profile
 profile_data:
-  path: /student/profile/{userId<[a-zA-Z0-9]+>}
+  path: /student/{userId<[a-zA-Z0-9]+>}/profile
   controller: App\Controller\StudentController::showProfileData
 eligible_exam:
   path: /student/eligible_exam_list/{userId<[a-zA-Z0-9]+>}
   controller: App\Controller\StudentController::showExamList
+student_all_result:
+  path: /student/result/{userId<[a-zA-Z0-9]+>}
+  controller: App\Controller\StudentController::showResult
+code_editor:
+  path: /code_editor
+  controller: App\Controller\CodeEditorController::createEditor

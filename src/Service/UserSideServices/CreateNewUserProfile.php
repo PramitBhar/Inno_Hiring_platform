@@ -13,6 +13,14 @@ use DateTime;
  *
  */
 class CreateNewUserProfile {
+  public string $firstName;
+  // This variable is used to store the first name of the student.
+  public string $lastName;
+  // This variable is used to store the last name of the student.
+  public string $marks;
+  // This variable is used to store the marks of the student.
+  public string $userUniqueId;
+  // This variable is used to store the user unique id.
   /**
    * Constuctor function is used to take the input of qustions as an array.
    *
@@ -23,42 +31,24 @@ class CreateNewUserProfile {
     $this->firstName = $questionListTable['fname'];
     $this->lastName = $questionListTable['lname'];
     $this->marks = $questionListTable['marks'];
-    // $this->question = $questionListTable['questionInput'];
-    // $this->option1 = $questionListTable['Option1'];
-    // $this->option2 = $questionListTable['Option2'];
-    // $this->option3 = $questionListTable['Option3'];
-    // $this->option4 = $questionListTable['Option4'];
-    // $this->answer = $questionListTable['answer'];
     $this->userUniqueId = $questionListTable['userUniqueId'];
-    // $this->questionUniqueId = uniqid();
   }
   /**
    * This function is used to store the exam data into the database.
+   *
+   * @param EntityManagerInterface $em
+   * @return stirng $userUniqueId
+   *  return the unique user id.
    */
   public function storeUserData(EntityManagerInterface $em) {
     $questionUniqueId = uniqid();
     $questionListEntity = new UserProfile();
     $questionListEntity->setFirstName($this->firstName);
-    // $questionListEntity->setQuestionNo("5");
     $questionListEntity->setLastName($this->lastName);
     $questionListEntity->setMarks($this->marks);
-    // $questionListEntity->setOption3($this->option3);
-    // $questionListEntity->setOption4($this->option4);
-    // $questionListEntity->setAnswer($this->answer);
     $questionListEntity->setUserUniqueId($this->userUniqueId);
-    // $questionListEntity->setQuestionUniqueId($questionUniqueId);
     $em->persist($questionListEntity);
     $em->flush();
     return $this->userUniqueId;
-  }
-  public function storeExamData(EntityManagerInterface $em) {
-    $examListEntity = new ExamList();
-    $examListEntity->setTitle($this->title);
-    $examListEntity->setStart($this->startTime);
-    $examListEntity->setLength($this->examLength);
-    $examListEntity->setExamUniqueId($this->examUniqueId);
-    $em->persist($examListEntity);
-    $em->flush();
-    return $this->examUniqueId;
   }
 }

@@ -25,8 +25,14 @@ class CreateNewExam {
     $this->examUniqueId = uniqid();
     $this->eligibleMarks = $questionListTable['eligibleMarks'];
   }
+
   /**
-   * This function is used to store the exam data into the database.
+   * This function is used to store the exam question data into the database.
+   *
+   * @param EntityManagerInterface $em
+   * @param integer $examUniqueId
+   *  It is contain the unique exam id for each exam.
+   * @return void
    */
   public function storeQuestionData(EntityManagerInterface $em, int $examUniqueId) {
     $questionUniqueId = uniqid();
@@ -43,6 +49,14 @@ class CreateNewExam {
     $em->persist($questionListEntity);
     $em->flush();
   }
+
+  /**
+   * This is function is used to store exam data into database.
+   *
+   * @param EntityManagerInterface $em
+   * @return string $examUniqueId.
+   *  It is contain unique exam id.
+   */
   public function storeExamData(EntityManagerInterface $em) {
     $examListEntity = new ExamList();
     $examListEntity->setTitle($this->title);

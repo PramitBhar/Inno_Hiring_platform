@@ -101,7 +101,7 @@ $res=mysqli_query($link, "select * from exam");
 {% for exam in eligibleExams %}
 <tr>
 <td>{{exam.examUniqueId}}</td>
-<td><a href="/contest/{{exam.examUniqueId}}">{{exam.Title}}</a></td>
+<td><a href="/contest/{{userId}}/{{exam.examUniqueId}}">{{exam.Title}}</a></td>
 <td>{{exam.start|date('Y-m-d H:i:s')}}</td>
 <td>{{exam.length}}hrs.</td>
 <td>{{exam.eligibleMarks}}</td>

@@ -30,7 +30,11 @@ class CurdQuestion {
     $this->questionUniqueId = uniqid();
   }
   /**
-   * This function is used to store the exam data into the database.
+   * This function is used to store the exam question data into the database.
+   *
+   * @param EntityManagerInterface $em
+   * @param string $examUniqueId
+   * @return void
    */
   public function storeQuestionData(EntityManagerInterface $em, string $examUniqueId) {
     $questionListEntity = new McqQuestionList();
@@ -46,9 +50,22 @@ class CurdQuestion {
     $em->persist($questionListEntity);
     $em->flush();
   }
+
+  /**
+   * This function is used to fetch the questio during edit a exam.
+   *
+   * @param string $examId
+   *  It is contain the exam id of a exam
+   *
+   * @param EntityManagerInterface $em
+   *
+   * @param McqQuestionListRepository $mcqQuestionRepo
+   *
+   * @return array $questionListEntity
+   *  It is contain all the question of a specific exam id.
+   */
   public function fetchQuestion(string $examId, EntityManagerInterface $em, McqQuestionListRepository $mcqQuestionRepo) {
     $questionListEntity = $mcqQuestionRepo->findOneBySomeField($examId);
     return $questionListEntity;
-
   }
 }

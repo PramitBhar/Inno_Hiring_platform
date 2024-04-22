@@ -107,11 +107,11 @@ $res=mysqli_query($link, "select * from exam");
 {% for exam in examList %}
 <tr>
 <th scope="row">{{exam.id}}</th>
-<td>{{exam.examUniqueId}}</td>
-<td><a href="/contest/{{exam.examUniqueId}}">{{exam.Title}}</a></td>
+{# <td>{{exam.examUniqueId}}</td> #}
+<td><a href="/contest/{{userId}}/{{exam.examUniqueId}}">{{exam.Title}}</a></td>
 <td>{{exam.start|date('Y-m-d H:i:s')}}</td>
 <td>{{exam.length}}hrs.</td>
-<td><a href="/recruit/edit_exam?q={{exam.id}}">Update</a></td>
+<td><a href="/recruit/edit_exam/{{userId}}/{{exam.examUniqueId}}">Update</a></td>
 <td>Delete</td>
 </tr>
 {% endfor %}
