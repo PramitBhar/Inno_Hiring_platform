@@ -1,0 +1,73 @@
+* {
+  margin: 0;
+}
+.container {
+  width: 1200px;
+  margin: 0 auto;
+}
+.header {
+  background: #57a958;
+  text-align: left;
+  font-size: 20px;
+  font-weight: bold;
+  color: white;
+  padding: 4px;
+  font-family: sans-serif;
+}
+
+.control-panel {
+  background: lightgray;
+  text-align: right;
+  padding: 4px;
+  font-family: sans-serif;
+}
+
+.languages {
+  background: white;
+  border: 1px solid gray;
+}
+
+.editor {
+  height: 400px;
+  margin: 0 10rem;
+}
+
+.button-container {
+  text-align: right;
+  padding: 4px;
+}
+
+.btn {
+  background: #57a958;
+  color: white;
+  padding: 8px;
+  border: 0;
+}
+
+.output {
+  padding: 4px;
+  border: 2px solid gray;
+  min-height: 100px;
+  width: 99%;
+  resize: none;
+
+}
+#input {
+  width: 1000px;
+  height: 10rem;
+  margin: 2rem 10rem;
+  padding: 1.2rem;
+}
+
+.output-header {
+  margin: 2rem 10rem;
+  font-weight: bold;
+}
+
+.code_output {
+  margin: 2rem 10rem;
+  border: 2px solid black;
+  height: 20rem;
+  font-size: 1.5rem;
+  padding: 1.2rem;
+}

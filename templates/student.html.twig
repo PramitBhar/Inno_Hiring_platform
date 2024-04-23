@@ -1,0 +1,11 @@
+<h1>This is student home page</h1>
+
+{% block body %}
+<h1>This is home page.</h1>
+
+<li>
+  <a href="/{{app.user ? 'logout':'login'}}">
+    {{app.user ? 'Logout':'Login'}}
+  </a>
+</li>
+{% endblock %}

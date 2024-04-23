@@ -1,0 +1,133 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel</title>
+    <link rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
+  crossorigin="anonymous">
+    {% block javascripts %}
+      {% block importmap %}{{ importmap('recruit') }}{% endblock %}
+    {% endblock %}
+</head>
+<body>
+{% block body %}
+<div class="nav-section">
+  <div class="container">
+
+
+    <nav class="navbar">
+    <div class="nav-logo">
+      <img src="{{ asset('images/company_logo.png') }}"
+      alt="nav-image" />
+    </div>
+    <div class="nav-btn">
+      <a href="/{{app.user ? 'logout':'login'}}">
+        {{app.user ? 'Logout':'Login'}}
+      </a>
+    </div>
+  </nav>
+  </div>
+</div>
+<div class="container">
+  <tr>
+    {% if examInfo.start|date('Y-m-d H:i:s') > "now"|date('Y-m-d H:i:s')%}
+    <th class="center">Exam will start after</th>
+    <td class="center"><span id="demo"></span></td>
+    {% else %}
+    <th class="center">Exam time remaining:</th>
+    <td class="center"><span id="demo2"></span></td>
+  </tr>
+  <div class="examQuestion">
+    <h6>No of question present:{{ count }}</h6>
+    <form action="" method="post">
+
+    {% for exam in mcq %}
+<table>
+<tr>
+<th scope="row">{{exam.question}}</th>
+</tr>
+</table>
+<table>
+  <tr>
+    <td>
+      <input type="radio"  name="{{exam.QuestionUniqueId}}" value="{{ exam.option1 }}">
+      {{exam.option1}}
+    </td>
+    <td>
+      <input type="radio"  name="{{exam.QuestionUniqueId}}" value="{{exam.option2}}">
+      {{exam.option2}}
+    </td>
+    <td>
+      <input type="radio"  name="{{exam.QuestionUniqueId}}" value="{{ exam.option3 }}">
+      {{exam.option3}}
+    </td>
+     <td>
+       <input type="radio"  name="{{exam.QuestionUniqueId}}" value="{{ exam.option4 }}">
+       {{exam.option4}}
+      </td>
+    </tr>
+  </table>
+  {% endfor %}
+  <button type="submit">Submit Exam</button>
+</form>
+{% endif %}
+</div>
+</div>
+</body>
+{% endblock %}
+</html>
+
+{# {% block javascripts %} #}
+{% set examStartDate = examInfo.start|date('c') %}
+{# 'c' formats the date in ISO 8601, ensuring time zone data is included #}
+{% set examLength = examInfo.length %}
+{# Assuming 'length' is in days. Adjust if it's in hours or other units #}
+
+<script>
+ Date.prototype.addHours = function(h) {
+  this.setTime(this.getTime() + (h*60*60*1000));
+  return this;
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  var now = new Date();
+  var examLen = {{ examLength }};
+  var examStartDate = new Date("{{ examStartDate }}");
+  if (examStartDate > now) {
+    // Exam hasn't started yet
+    startCountdown(examStartDate, "demo", "until the exam starts");
+  } else {
+    var examEndDate = new Date(examStartDate.getTime());
+    examEndDate.setHours(examStartDate.getHours() + examLen)
+    startCountdown(examEndDate, "demo2", "until the exam ends");
+  }
+});
+
+function startCountdown(targetDate, elementId, message) {
+  var interval = setInterval(function() {
+    var now = new Date().getTime();
+    console.log("end -> " + targetDate)
+    var distance = targetDate - now;
+
+    // Time calculations for days, hours, minutes, and seconds
+    var days = Math.floor(distance / (1000 * 60 * 60 * 24));
+    var hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+    var seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+    // Update the display element
+    var display = `${days}d ${hours}h ${minutes}m ${seconds}s ${message}`;
+    document.getElementById(elementId).innerHTML = display;
+
+    // Check if the countdown is finished
+    if (distance < 0) {
+      clearInterval(interval);
+      document.getElementById(elementId).innerHTML = "EXPIRED";
+    }
+  }, 1000);
+}
+</script>

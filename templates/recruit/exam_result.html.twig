@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Doc</title>
+</head>
+<body>
+{% if marks is defined %}
+  Your Obtained marks in this exam is: {{ marks }}
+{% else %}
+  Marks not available
+{% endif %}
+</body>
+</html>
+<script>
+  window.history.pushState(null, document.title, window.location.href);
+window.addEventListener('popstate', function(event) {
+    window.history.pushState(null, document.title, window.location.href);
+});
+</script>

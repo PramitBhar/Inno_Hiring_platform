@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+<h1>Student's Page</h1>
+<h1>This is home page.</h1>
+
+<li>
+  <a href="/{{app.user ? 'logout':'login'}}">
+    {{app.user ? 'Logout':'Login'}}
+  </a>
+</li>
+
+<li>
+  <a href="/student/{{userId}}/create_profile">Create Profile</a>
+  <a href="/student/{{userId}}/profile">Profile</a>
+  <a href="/student/eligible_exam_list/{{userId}}">Exam List</a>
+  <a href="#">Result</a>
+</li>
+{% endblock %}
