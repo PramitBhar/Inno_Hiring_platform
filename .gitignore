@@ -12,6 +12,8 @@
 /src/Service/Compiler.php
 /src/Controller/CodeEditorController.php
 /templates/codeEditor
+/assets/images/
+/assets/files/
 ###< symfony/framework-bundle ###
 
 ###> phpunit/phpunit ###
@@ -28,3 +30,4 @@
 /public/assets/
 /assets/vendor/
 ###< symfony/asset-mapper ###
+

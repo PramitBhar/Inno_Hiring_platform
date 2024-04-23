@@ -20,14 +20,15 @@ class CurdQuestion {
    *
    */
   public function __construct(array $questionListTable) {
-
-    $this->question = $questionListTable['questionInput'];
-    $this->option1 = $questionListTable['Option1'];
-    $this->option2 = $questionListTable['Option2'];
-    $this->option3 = $questionListTable['Option3'];
-    $this->option4 = $questionListTable['Option4'];
-    $this->answer = $questionListTable['answer'];
-    $this->questionUniqueId = uniqid();
+    for ($i=0; $i<count($_POST); $i++) {
+      $this->question = $questionListTable['questionInput'][$i];
+      $this->option1 = $questionListTable['Option1'][$i];
+      $this->option2 = $questionListTable['Option2'][$i];
+      $this->option3 = $questionListTable['Option3'][$i];
+      $this->option4 = $questionListTable['Option4'][$i];
+      $this->answer = $questionListTable['answer'][$i];
+      $this->questionUniqueId = uniqid();
+    }
   }
   /**
    * This function is used to store the exam question data into the database.

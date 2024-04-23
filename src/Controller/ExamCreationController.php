@@ -53,8 +53,12 @@ class ExamCreationController extends AbstractController
     $getExamId = basename(parse_url($url, PHP_URL_PATH));
     // It is contain the exam id from the header
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      $cp = new CurdQuestion($_POST);
-      $cp->storeQuestionData($em, $getExamId);
+      // for ($i =0; $i<count($_POST); $i++) {
+      //   $cp = new CurdQuestion($_POST[$i]);
+      //   $cp->storeQuestionData($em, $getExamId);
+      // }
+        $cp = new CurdQuestion($_POST);
+        $cp->storeQuestionData($em, $getExamId);
       return $this->redirectToRoute('add_question', ['getExamId' => $getExamId]);
     }
     return $this->render('recruit/add_exam.html.twig', ['getExamId' => $getExamId]);
@@ -102,6 +106,7 @@ class ExamCreationController extends AbstractController
     $getExamId = basename(parse_url($url, PHP_URL_PATH));
     $examInformation = $examList->findOneBySomeField($getExamId);
     $questionData = $mcqQuestionList->findOneBySomeField($getExamId);
+    $count = count($questionData);
     $calc = 0;
     if ($_SERVER["REQUEST_METHOD"]=="POST") {
       $url = $request->headers->get('referer');
@@ -122,11 +127,12 @@ class ExamCreationController extends AbstractController
       $lastName = $userName['0']->getLastName();
       $fullName = $firstName." ".$lastName;
       $UserResult->storeStudentPerformanceData($getUserId, $getExamId2, $fullName, $calc, $em);
-
-      return $this->render('recruit/exam_result.html.twig', ['getExamId' => $getExamId2, 'marks' => $calc]);
+      $request->getSession()->set('marks', $calc);
+      return $this->redirectToRoute('result', ['userId' => $getUserId, 'getExamId' => $getExamId2]);
+      // return $this->render('recruit/exam_result.html.twig', ['getExamId' => $getExamId2, 'marks' => $calc]);
     }
 
-    return $this->render('recruit/exam_submission.html.twig', ['examInfo'=> $examInformation,'mcq' => $questionData]);
+    return $this->render('recruit/exam_submission.html.twig', ['examInfo'=> $examInformation,'mcq' => $questionData, 'count' => $count]);
   }
   /**
    * This function is used to see the current exam score after submitting the exam.
@@ -141,10 +147,9 @@ class ExamCreationController extends AbstractController
    *  This is contain the exam id of the exam
    * @return Response
    */
-  public function examResult(EntityManagerInterface $em, ExamListRepository $examList, McqQuestionListRepository $mcqQuestionList, Request $request, string $marks, string $getExamId) : Response  {
-    $url = $request->headers->get('referer');
-    // $getExamId = basename(parse_url($url, PHP_URL_PATH));
-    // $marks = 0 | $request->query->get('marks');
+  public function examResult(EntityManagerInterface $em, ExamListRepository $examList, McqQuestionListRepository $mcqQuestionList, Request $request, string $getExamId) : Response  {
+    $marks = $request->getSession()->get('marks');
+    $request->getSession()->remove('marks'); // Clear the session variable after use
     return $this->render('recruit/exam_result.html.twig', ['getExamId' => $getExamId,'marks' => $marks]);
   }
 }

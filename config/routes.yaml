@@ -35,7 +35,7 @@ exam_contest:
   path: /contest/{userId<[a-zA-Z0-9]+>}/{getExamId<[a-zA-Z0-9]+>}
   controller: App\Controller\ExamCreationController::submitExam
 result:
-  path: /contest/{getExamId<[a-zA-Z0-9]+>}/result
+  path: /contest/{userId<[a-zA-Z0-9]+>}/{getExamId<[a-zA-Z0-9]+>}/result
   controller: App\Controller\ExamCreationController::examResult
 student_profile:
   path: /student/{userId<[a-zA-Z0-9]+>}/create_profile

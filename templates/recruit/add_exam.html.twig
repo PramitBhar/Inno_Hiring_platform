@@ -56,9 +56,61 @@
       <div class="card shadow">
         <div class="card-body p-4">
             <div id="show_item">
-              <form method="post" action="">
+              <form method="post" action="" id="add_form">
               <div class="row">
                 <div class="col-md-3 mb-3 question_input">
+                  <textarea name="questionInput[]" class="form-control"
+                  placeholder="Enter Your Question Here" required></textarea>
+                </div>
+                <div class="col-md-3 mb-3 option">
+                  <input type="text" name="Option1[]" class="form-control"
+                  placeholder="option 1" required>
+                </div>
+
+                <div class="col-md-4 mb-3 option">
+                  <input type="text" name="Option2[]" class="form-control"
+                  placeholder="Option 2" required>
+                </div>
+
+                <div class="col-md-3 mb-3 option">
+                  <input type="text" name="Option3[]" class="form-control"
+                  placeholder="Option 3" required>
+                </div>
+
+                <div class="col-md-3 md-3 option">
+                  <input type="text" name="Option4[]" class="form-control"
+                  placeholder="option 4" required>
+                </div>
+
+                <div class="col-md-3 md-3 answer">
+                  <input type="text" name="answer[]" class="form-control"
+                  placeholder="Enter the Right Answer" required>
+                </div>
+
+                <div class="col-md-2 mb-3 answer">
+                  <button class="btn btn-success add_item_btn">Add More Question</button>
+                </div>
+              </div>
+              <div>
+                <button type="submit" class="btn btn-success add_item_btn" id="add_btn">Publish Exam</button>
+                {# <input type="submit" class="btn btn-primary W-25" id="add_btn" value="Publish Exam"> #}
+              </div>
+              </form>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  {% set examId = getExamId %}
+  <script>
+       document.addEventListener('click', function(e) {
+            if (e.target.classList.contains('add_item_btn')) {
+                e.preventDefault();
+                let container = document.getElementById('show_item');
+                 let newRow = document.createElement('div');
+                newRow.className = 'row';
+                newRow.innerHTML = `
+                    <div class="col-md-3 mb-3 question_input">
                   <textarea name="questionInput" class="form-control"
                   placeholder="Enter Your Question Here" required></textarea>
                 </div>
@@ -78,7 +130,7 @@
                 </div>
 
                 <div class="col-md-3 md-3 option">
-                  <input type="text" name="Option4" class="form-control"
+                  <input type="text" name="option4" class="form-control"
                   placeholder="option 4" required>
                 </div>
 
@@ -86,20 +138,39 @@
                   <input type="text" name="answer" class="form-control"
                   placeholder="Enter the Right Answer" required>
                 </div>
+                    <div class="col-md-2 mb-3 answer">
+                        <button class="btn btn-danger remove_item_btn">Remove</button>
+                    </div>
+                `;
+                container.prepend(newRow);
+            }
+        });
+        document.addEventListener('click',function(e) {
+          if(e.target.classList.contains('remove_item_btn')) {
+            e.preventDefault();
+            let container = document.getElementById('show_item');
+            container.removeChild(container.firstElementChild);
+          }
+        })
 
-                <div class="col-md-2 mb-3 answer">
-                  <button class="btn btn-success add_item_btn">Add More Question</button>
-                </div>
-              </div>
-              </form>
-            </div>
-            <div>
-              <a class="btn btn-primary W-25" id="add_btn" href="/{{'recruit'}}">Publish Exam</a>
-            </div>
-        </div>
-      </div>
-    </div>
-  </div>
+        function updateTextInput(val) {
+          document.getElementById('textInput').value=val;
+        }
+
+        $("#add_form").submit(function(e) {
+          e.preventDefault();
+          $("#add_btn").val('Adding...');
+          $.ajax({
+            url: '/add_quest9ion/'+ {{ getExamId }},
+            method: 'post',
+            data: $(this).serialize(),
+            success:function(response) {
+              console.log(response);
+            }
+          });
+        });
+    </script>
   {% endblock %}
+
 </body>
 </html>
