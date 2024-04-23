@@ -24,14 +24,6 @@
       <img src="{{ asset('images/company_logo.png') }}"
       alt="nav-image" />
     </div>
-    {# <ul class="nav-items">
-      <li class="nav-links">
-        <a href="#dashboard">Dashboard</a>
-      </li>
-      <li class="nav-links">
-        <a href="#assessments">Assessments</a>
-      </li>
-    </ul> #}
     <div class="nav-btn">
       <a href="/{{app.user ? 'logout':'login'}}">
         {{app.user ? 'Logout':'Login'}}
@@ -57,10 +49,6 @@
 <table>
 <tr>
 <th scope="row">{{exam.question}}</th>
-{# <td>{{exam.option1}}</td> #}
-{# <td>{{exam.option2}}</td> #}
-{# <td>{{exam.option3}}</td> #}
-{# <td>{{exam.option4}}</td> #}
 </tr>
 </table>
 <table>
@@ -94,8 +82,10 @@
 </html>
 
 {# {% block javascripts %} #}
-{% set examStartDate = examInfo.start|date('c') %}  {# 'c' formats the date in ISO 8601, ensuring time zone data is included #}
-{% set examLength = examInfo.length %}  {# Assuming 'length' is in days. Adjust if it's in hours or other units #}
+{% set examStartDate = examInfo.start|date('c') %}
+{# 'c' formats the date in ISO 8601, ensuring time zone data is included #}
+{% set examLength = examInfo.length %}
+{# Assuming 'length' is in days. Adjust if it's in hours or other units #}
 
 <script>
  Date.prototype.addHours = function(h) {
@@ -107,28 +97,10 @@ document.addEventListener('DOMContentLoaded', function() {
   var now = new Date();
   var examLen = {{ examLength }};
   var examStartDate = new Date("{{ examStartDate }}");
-
-  // examLen = examLen.replace(' ', 'T');
-  // alert(examStartDate);
-  // console.log(examLen);
-  // Determine if the countdown is for the start or the end of the exam
   if (examStartDate > now) {
     // Exam hasn't started yet
     startCountdown(examStartDate, "demo", "until the exam starts");
   } else {
-    // Exam is ongoing; calculate the end time
-    // var examEndDate = new Date(examStartDate.getTime());
-    // alert(examEndDate);
-    // examEndDate.addHours(3);
-    // alert(examEndDate);
-
-    // console.log(examEndDate);
-    // console.log({{examLength}});
-    // examEndDate.setDate(examEndDate.getDate());
-    // examEndDate.setHours(examEndDate.getDate());  // Adjusting by the exam length in days
-    // console.log(examEndDate);
-    // alert(typeof(examEndDate.getDate()));
-    // alert(examEndDate.getUTCHours());
     var examEndDate = new Date(examStartDate.getTime());
     examEndDate.setHours(examStartDate.getHours() + examLen)
     startCountdown(examEndDate, "demo2", "until the exam ends");
@@ -138,8 +110,6 @@ document.addEventListener('DOMContentLoaded', function() {
 function startCountdown(targetDate, elementId, message) {
   var interval = setInterval(function() {
     var now = new Date().getTime();
-    // alert(parseInt((targetDate / 1000).toFixed(0))-now);
-    // alert(now);
     console.log("end -> " + targetDate)
     var distance = targetDate - now;
 

@@ -16,33 +16,22 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class ExamListRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, ExamList::class);
-    }
+  public function __construct(ManagerRegistry $registry)
+  {
+      parent::__construct($registry, ExamList::class);
+  }
 
-    //    /**
-    //     * @return ExamList[] Returns an array of ExamList objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('e')
-    //            ->andWhere('e.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('e.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
+  /**
+   * This function is used to fetch exam data based of exam unique id.
+   */
 
-       public function findOneBySomeField($value): ?ExamList
-       {
-           return $this->createQueryBuilder('e')
-               ->andWhere('e.examUniqueId = :val')
-               ->setParameter('val', $value)
-               ->getQuery()
-               ->getOneOrNullResult()
-           ;
-       }
+  public function findOneBySomeField($value): ?ExamList
+  {
+      return $this->createQueryBuilder('e')
+          ->andWhere('e.examUniqueId = :val')
+          ->setParameter('val', $value)
+          ->getQuery()
+          ->getOneOrNullResult()
+      ;
+  }
 }

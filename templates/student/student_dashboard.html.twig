@@ -1,124 +1,99 @@
-{# {% extends 'base.html.twig' %}
-
-{% block body %}
-<h1>Recruiter page</h1>
-<h1>This is home page.</h1>
-
-<li>
-  <a href="/{{app.user ? 'logout':'login'}}">
-    {{app.user ? 'Logout':'Login'}}
-  </a>
-</li>
-{% endblock %} #}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel</title>
-    <link rel="stylesheet"
-  href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
-  integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T"
-  crossorigin="anonymous">
-    {% block javascripts %}
-      {% block importmap %}{{ importmap('recruit') }}{% endblock %}
-    {% endblock %}
-</head>
-<body>
-{% block body %}
-<div class="nav-section">
-  <div class="container">
+	<head>
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<title>Admin Panel</title>
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+		{% block javascripts %}
+			{% block importmap %}
+				{{ importmap('recruit') }}
+			{% endblock %}
+		{% endblock %}
+	</head>
+	<body>
+		{% block body %}
+			<div class="nav-section">
+				<div class="container">
 
 
-    <nav class="navbar">
-    <div class="nav-logo">
-      <img src="{{ asset('images/company_logo.png') }}"
-      alt="nav-image" />
-    </div>
-    {# <ul class="nav-items">
-      <li class="nav-links">
-        <a href="#dashboard">Dashboard</a>
-      </li>
-      <li class="nav-links">
-        <a href="#assessments">Assessments</a>
-      </li>
-    </ul> #}
-    <div class="nav-btn">
-      <a href="/{{app.user ? 'logout':'login'}}">
-        {{app.user ? 'Logout':'Login'}}
-      </a>
-    </div>
-  </nav>
-  </div>
-</div>
-<div class="container">
+					<nav class="navbar">
+						<div class="nav-logo">
+							<img src="{{ asset('images/company_logo.png') }}" alt="nav-image"/>
+						</div>
+						<div class="nav-btn">
+							<a href="/{{app.user ? 'logout':'login'}}">
+								{{app.user ? 'Logout':'Login'}}
+							</a>
+						</div>
+					</nav>
+				</div>
+			</div>
+			<div class="container">
 
-  <div class="dashboard-section">
+				<div class="dashboard-section">
 
-    <div class="sidebar">
-    <ul class="test-status">
-      <li>
-        Test Status
-        <ul class="status-option">
-          <li>
-          <a href="#all">All</a>
-          </li>
-          <li>
-            <a href="#running">Running</a>
-          </li>
-          <li>
-            <a href="#ended">Ended</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </div>
-  <div class="exam-list-new-test">
-    {# <div class="new-test-btn">
-      <a href="/recruit/new-test">Create new test</a>
-    </div> #}
+					<div class="sidebar">
+						<ul class="test-status">
+							<li>
+								Test Status
+								<ul class="status-option">
+									<li>
+										<a href="#all">All</a>
+									</li>
+									<li>
+										<a href="#running">Running</a>
+									</li>
+									<li>
+										<a href="#ended">Ended</a>
+									</li>
+								</ul>
+							</li>
+						</ul>
+					</div>
+					<div
+						class="exam-list-new-test">
+						{# Displays the query results in the form of table. #}
+						<div class="col-lg-12 exam-list">
+							<div class="card list-card">
+								<div class="card-header">
+									<strong class="card-title">Exam Categories</strong>
+								</div>
+								<div class="card-body">
+									<table class="table table-bordered">
+										<thead>
+											<tr>
+												<th scope="col">#</th>
+												<th scope="col">Exam Name</th>
+												<th scope "col">Begin Time</th>
+												<th scope "col">Length</th>
+											</tr>
+										</thead>
+										<tbody>
 
-    {# Displays the query results in the form of table. #}
-    <div class="col-lg-12 exam-list">
-<div class="card list-card">
-<div class="card-header">
-<strong class="card-title">Exam Categories</strong>
-</div>
-<div class="card-body">
-<table class="table table-bordered">
-<thead>
-<tr>
-<th scope="col">#</th>
-<th scope="col">Exam Name</th>
-<th scope "col">Begin Time</th>
-<th scope "col">Length</th>
-</tr>
-</thead>
-<tbody>
-{# <?php
-$res=mysqli_query($link, "select * from exam");
-?> #}
-{% for exam in examList %}
-<tr>
-<td>{{exam.examUniqueId}}</td>
-<td><a href="/contest/{{exam.examUniqueId}}">{{exam.Title}}</a></td>
-<td>{{exam.start|date('Y-m-d H:i:s')}}</td>
-<td>{{exam.length}}hrs.</td>
-</tr>
-{% endfor %}
-</tbody>
-</table>
-</div>
-</div>
-</div>
+											{% for exam in examList %}
+												<tr>
+													<td>{{exam.examUniqueId}}</td>
+													<td>
+														<a href="/contest/{{exam.examUniqueId}}">{{exam.Title}}</a>
+													</td>
+													<td>{{exam.start|date('Y-m-d H:i:s')}}</td>
+													<td>{{exam.length}}hrs.</td>
+												</tr>
+											{% endfor %}
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
 
 
-</div>
+					</div>
 
-</div>
-</div>
+				</div>
+			</div>
 
 
-  {% endblock %}
-</body>
+		{% endblock %}
+	</body>
 </html>

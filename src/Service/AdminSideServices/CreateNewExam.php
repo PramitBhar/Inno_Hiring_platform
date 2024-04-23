@@ -12,6 +12,16 @@ use DateTime;
  *
  */
 class CreateNewExam {
+  public string $title;
+  // It is contains the title of the exam.
+  public DateTime $startTime;
+  // It is contains the starting time of the exam.
+  public string $examLength;
+  // It is contain the length of the exam.
+  public string $examUniqueId;
+  // It is contain the unique id of the exam.
+  public string $eligibleMarks;
+  // It is contain the eligibily marks to give the exam.
   /**
    * Constuctor function is used to take the input of qustions as an array.
    *
@@ -24,30 +34,6 @@ class CreateNewExam {
     $this->examLength = $questionListTable['examLength'];
     $this->examUniqueId = uniqid();
     $this->eligibleMarks = $questionListTable['eligibleMarks'];
-  }
-
-  /**
-   * This function is used to store the exam question data into the database.
-   *
-   * @param EntityManagerInterface $em
-   * @param integer $examUniqueId
-   *  It is contain the unique exam id for each exam.
-   * @return void
-   */
-  public function storeQuestionData(EntityManagerInterface $em, int $examUniqueId) {
-    $questionUniqueId = uniqid();
-    $questionListEntity = new McqQuestionList();
-    $questionListEntity->setQuestion($this->question);
-    $questionListEntity->setQuestionNo("5");
-    $questionListEntity->setOption1($this->option1);
-    $questionListEntity->setOption2($this->option2);
-    $questionListEntity->setOption3($this->option3);
-    $questionListEntity->setOption4($this->option4);
-    $questionListEntity->setAnswer($this->answer);
-    $questionListEntity->setExamUniqueId($examUniqueId);
-    $questionListEntity->setQuestionUniqueId($questionUniqueId);
-    $em->persist($questionListEntity);
-    $em->flush();
   }
 
   /**

@@ -52,10 +52,6 @@
     </ul>
   </div>
   <div class="new-test-form-section">
-    {# <div class="new-test-btn">
-      <a href="/recruit/new-test">Create new test</a>
-    </div> #}
-
     <form action="" method="post">
   <div class="form-group row">
     <label for="inputEmail3" class="col-sm-2 col-form-label">Exam title</label>
@@ -86,7 +82,6 @@
 </div>
 </div>
     {% endblock %}
-    {# {% block javascripts %} #}
     <script>
        document.addEventListener('click', function(e) {
             if (e.target.classList.contains('add_item_btn')) {
@@ -142,6 +137,5 @@
           document.getElementById('textInput').value=val;
         }
     </script>
-    {# {% endblock %} #}
   </body>
 </html>

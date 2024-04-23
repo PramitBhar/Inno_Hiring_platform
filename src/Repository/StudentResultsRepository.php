@@ -16,33 +16,23 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class StudentResultsRepository extends ServiceEntityRepository
 {
-    public function __construct(ManagerRegistry $registry)
-    {
-        parent::__construct($registry, StudentResults::class);
-    }
-
-    //    /**
-    //     * @return StudentResults[] Returns an array of StudentResults objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('s')
-    //            ->andWhere('s.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('s.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-       public function getName($value): ?StudentResults
-       {
-           return $this->createQueryBuilder('s')
-               ->andWhere('s.userId = :val')
-               ->setParameter('val', $value)
-               ->getQuery()
-               ->getResult()
-           ;
-       }
+  public function __construct(ManagerRegistry $registry)
+  {
+      parent::__construct($registry, StudentResults::class);
+  }
+  /**
+   * This function to fetch the user profile data based on user unique id.
+   *
+   * @param string $value
+   * @return StudentResults|null
+   */
+  public function getName(string $value): ?StudentResults
+  {
+      return $this->createQueryBuilder('s')
+          ->andWhere('s.userId = :val')
+          ->setParameter('val', $value)
+          ->getQuery()
+          ->getResult()
+      ;
+  }
 }

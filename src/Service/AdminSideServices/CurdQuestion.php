@@ -13,6 +13,20 @@ use DateTime;
  *
  */
 class CurdQuestion {
+  public string $question;
+  // It is contain question.
+  public string $option1;
+  // It is contain first option of the question.
+  public string $option2;
+  // It is contain second option of the question.
+  public string $option3;
+  // It is contain third option of the question.
+  public string $option4;
+  // It is contain fourth option of the question.
+  public string $answer;
+  // It is contain answer of the question.
+  public string $questionUniqueId;
+  // It is contain unique question id.
   /**
    * Constuctor function is used to take the input of qustions as an array.
    *

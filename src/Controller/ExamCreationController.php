@@ -27,6 +27,7 @@ class ExamCreationController extends AbstractController
    * This function is used to create a new exam.
    *
    * @param EntityManagerInterface $em
+   *
    * @return Response
    */
   public function createExam(EntityManagerInterface $em) : Response
@@ -43,7 +44,9 @@ class ExamCreationController extends AbstractController
    * This function is used to add question in a new exam.
    *
    * @param EntityManagerInterface $em
+   *
    * @param Request $request
+   *
    * @return Response
    */
   public function addQuestion(EntityManagerInterface $em, Request $request) : Response
@@ -51,12 +54,8 @@ class ExamCreationController extends AbstractController
     $url = $request->headers->get('referer');
     // This variable is fetch the url from the header.
     $getExamId = basename(parse_url($url, PHP_URL_PATH));
-    // It is contain the exam id from the header
+    // It is contain the exam id from the header.
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-      // for ($i =0; $i<count($_POST); $i++) {
-      //   $cp = new CurdQuestion($_POST[$i]);
-      //   $cp->storeQuestionData($em, $getExamId);
-      // }
         $cp = new CurdQuestion($_POST);
         $cp->storeQuestionData($em, $getExamId);
       return $this->redirectToRoute('add_question', ['getExamId' => $getExamId]);
@@ -70,19 +69,25 @@ class ExamCreationController extends AbstractController
    * fetch exam details of that particular id and update the details.
    *
    * @param EntityManagerInterface $em
+   *
    * @param ExamListRepository $examList
    *  It is used to call exam related method which fetch exam data.
+   *
    * @param McqQuestionListRepository $mcqQuestionList
    *  It is used to call mcq question related method which fetch question data.
+   *
    * @param Request $request
    *  Request represent an http request.
+   *
    * @return Response
    */
   public function editExam(EntityManagerInterface $em, ExamListRepository $examList, McqQuestionListRepository $mcqQuestionList, Request $request) : Response {
-    // $queryParameter = $request->query->get('q');
     $url = $request->getUri();
+    // It is contain the url
     $query = explode('/', parse_url($url, PHP_URL_PATH));
+    // Explode the url with '/' and store them in $query.
     $queryParameter = $query[4];
+    // It is store the question unique id.
     if ($_SERVER["REQUEST_METHOD"]=="POST") {
       $editOperation = new EditExam($_POST);
       $editOperation->editQuestionData($em, $examList, $queryParameter);
@@ -95,19 +100,30 @@ class ExamCreationController extends AbstractController
    * This function is used to takes data from user answer and calculate the marks.
    *
    * @param EntityManagerInterface $em
+   *
    * @param ExamListRepository $examList
+   *
    * @param McqQuestionListRepository $mcqQuestionList
+   *
    * @param Request $request
+   *
    * @param UserProfileRepository $userDetails
+   *
    * @return Response
    */
   public function submitExam(EntityManagerInterface $em, ExamListRepository $examList, McqQuestionListRepository $mcqQuestionList, Request $request, UserProfileRepository $userDetails) : Response  {
     $url = $request->getUri();
+    // It is contain the url.
     $getExamId = basename(parse_url($url, PHP_URL_PATH));
+    // Store the exam id.
     $examInformation = $examList->findOneBySomeField($getExamId);
+    // Store full exam info by an id.
     $questionData = $mcqQuestionList->findOneBySomeField($getExamId);
+    // It is contain the all question by an particular exam.
     $count = count($questionData);
+    // Store the number of question present in the exam.
     $calc = 0;
+    // It is used to calculate marks of the user.
     if ($_SERVER["REQUEST_METHOD"]=="POST") {
       $url = $request->headers->get('referer');
       $path = explode('/', parse_url($url, PHP_URL_PATH));
@@ -129,7 +145,6 @@ class ExamCreationController extends AbstractController
       $UserResult->storeStudentPerformanceData($getUserId, $getExamId2, $fullName, $calc, $em);
       $request->getSession()->set('marks', $calc);
       return $this->redirectToRoute('result', ['userId' => $getUserId, 'getExamId' => $getExamId2]);
-      // return $this->render('recruit/exam_result.html.twig', ['getExamId' => $getExamId2, 'marks' => $calc]);
     }
 
     return $this->render('recruit/exam_submission.html.twig', ['examInfo'=> $examInformation,'mcq' => $questionData, 'count' => $count]);

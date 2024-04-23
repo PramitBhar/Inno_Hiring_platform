@@ -9,6 +9,9 @@ use App\Service\UserSideServices\CreateNewUserProfile;
 use App\Repository\UserProfileRepository;
 use App\Repository\ExamListRepository;
 use Symfony\Component\HttpFoundation\Request;
+use App\Repository\UserRepository;
+use App\Entity\User;
+
 /**
  * This class control all the services provide to the student
  */
@@ -33,25 +36,26 @@ class StudentController extends AbstractController
    * @param Request $request
    * @return Response
    */
-  public function profile(EntityManagerInterface $em, Request $request) : Response {
+  public function profile(EntityManagerInterface $em, Request $request, UserProfileRepository $userProfile) : Response {
     $url = $request->headers->get('referer');
     // Fetch the url from the header.
     $getUserId2 = basename(parse_url($url, PHP_URL_PATH));
     // This is contain user id
+    $email = $this->getUser()->getEmail();
+    // Store the user email.
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $cp = new CreateNewUserProfile($_POST);
-      // $cp->storeQuestionData($em);
       $getUserId = $cp->storeUserData($em);
       return $this->redirectToRoute('student', ['userId' => $getUserId2]);
     }
-    return $this->render('student/student_create_profile.html.twig', ['userId' => $getUserId2]);
+    return $this->render('student/student_create_profile.html.twig', ['userId' => $getUserId2, 'email' => $email]);
   }
 
   /**
    * This function is used to get all the user profile data
    *
    * @param string $userId
-   *  This is contain the user id
+   * This is contain the user id
    * @param UserProfileRepository $user
    * @param Request $request
    * @return Response
